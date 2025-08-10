@@ -1,0 +1,29 @@
+{
+  "name": "@joacogdelr/news-entities",
+  "version": "1.4.4",
+  "description": "Shared entities and migrations for news applications",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "reset-db": "tsx scripts/reset-database.ts",
+    "seed": "tsx scripts/run-seeds.ts",
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate",
+    "migration:run": "typeorm-ts-node-commonjs migration:run -d src/data-source.ts",
+    "migration:revert": "typeorm-ts-node-commonjs migration:revert -d src/data-source.ts",
+    "migration:show": "typeorm-ts-node-commonjs migration:show -d src/data-source.ts"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.5.4"
+  },
+  "peerDependencies": {
+    "pg": "^8.11.0"
+  }
+}
