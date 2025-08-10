@@ -11,9 +11,6 @@ export class Source extends BaseEntity {
   @Column({ type: 'varchar', unique: true })
   name: string;
 
-  @Column({ type: 'varchar', unique: true, name: 'rss_feed_url' })
-  rssFeedUrl: string;
-
   @Column({ type: 'varchar' })
   domain: string;
 
