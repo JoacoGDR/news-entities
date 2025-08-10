@@ -1,1 +1,0 @@
-{"version":3,"file":"tag.entity.d.ts","sourceRoot":"","sources":["../../src/entities/tag.entity.ts"],"names":[],"mappings":"AAMA,OAAO,EAAE,KAAK,EAAE,MAAM,gBAAgB,CAAC;AACvC,OAAO,EAAE,UAAU,EAAE,MAAM,eAAe,CAAC;AAE3C,qBACa,GAAI,SAAQ,UAAU;IAGjC,IAAI,EAAE,MAAM,CAAC;IAIb,cAAc,EAAE,MAAM,CAAC;IAGvB,OAAO,EAAE,KAAK,EAAE,CAAC;CAClB"}
