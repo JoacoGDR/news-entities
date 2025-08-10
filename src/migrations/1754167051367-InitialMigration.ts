@@ -14,18 +14,28 @@ export class InitialMigration1754167051367 implements MigrationInterface {
                 "created_at" TIMESTAMP NOT NULL DEFAULT now(),
                 "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
                 "name" character varying NOT NULL,
-                "rss_feed_url" character varying NOT NULL,
                 "domain" character varying NOT NULL,
                 "location" character varying NOT NULL,
                 "last_fetched_at" TIMESTAMP,
-                CONSTRAINT "UQ_363904f5ab4f6635d05fae1e62f" UNIQUE ("rss_feed_url"),
-                CONSTRAINT "PK_85523beafe5a2a6b90b02096443" PRIMARY KEY ("id")
+                CONSTRAINT "PK_sources_id" PRIMARY KEY ("id")
             )
         `);
 
         // Create unique index on sources name
         await queryRunner.query(`
             CREATE UNIQUE INDEX "IDX_sources_name" ON "sources" ("name")
+        `);
+
+        // Create rss_feeds table
+        await queryRunner.query(`
+            CREATE TABLE "rss_feeds" (
+                "id" SERIAL NOT NULL,
+                "created_at" TIMESTAMP NOT NULL DEFAULT now(),
+                "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
+                "url" character varying UNIQUE NOT NULL,
+                "source_id" integer,
+                CONSTRAINT "PK_rss_feeds_id" PRIMARY KEY ("id")
+            )
         `);
 
         // Create rss_entries table
@@ -40,8 +50,8 @@ export class InitialMigration1754167051367 implements MigrationInterface {
                 "published_at" TIMESTAMP NOT NULL,
                 "fetched_at" TIMESTAMP NOT NULL,
                 "is_enqueued" boolean NOT NULL DEFAULT false,
-                "source_id" integer,
-                CONSTRAINT "PK_3340c59b85ddc30bc29528d29a3" PRIMARY KEY ("id")
+                "rss_feed_id" integer,
+                CONSTRAINT "PK_rss_entries_id" PRIMARY KEY ("id")
             )
         `);
 
@@ -62,8 +72,7 @@ export class InitialMigration1754167051367 implements MigrationInterface {
                 "scraped_content" text NOT NULL,
                 "scraped_at" TIMESTAMP NOT NULL,
                 "rss_entry_id" integer,
-                CONSTRAINT "REL_f19919a4345508c18853edc9da" UNIQUE ("rss_entry_id"),
-                CONSTRAINT "PK_bd33847a79774b4e054cd9e2ea9" PRIMARY KEY ("id")
+                CONSTRAINT "PK_scraped_articles_id" PRIMARY KEY ("id")
             )
         `);
 
@@ -73,10 +82,15 @@ export class InitialMigration1754167051367 implements MigrationInterface {
                 "id" SERIAL NOT NULL,
                 "created_at" TIMESTAMP NOT NULL DEFAULT now(),
                 "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
+                "urgency" integer NOT NULL DEFAULT 1,
                 "title" character varying NOT NULL,
                 "summary" text NOT NULL,
-                CONSTRAINT "PK_bb6f880b260ed96c452b32a39f0" PRIMARY KEY ("id")
+                CONSTRAINT "PK_stories_id" PRIMARY KEY ("id")
             )
+        `);
+
+        await queryRunner.query(`
+            CREATE INDEX "IDX_stories_urgency" ON "stories" ("urgency")
         `);
 
         // Create facts table with vector embedding
@@ -89,7 +103,7 @@ export class InitialMigration1754167051367 implements MigrationInterface {
                 "content" text NOT NULL,
                 "embedding" vector(1536),
                 "story_id" integer,
-                CONSTRAINT "PK_b35218a44dc3d5dd2f0f54d7e3f" PRIMARY KEY ("id")
+                CONSTRAINT "PK_facts_id" PRIMARY KEY ("id")
             )
         `);
 
@@ -106,7 +120,7 @@ export class InitialMigration1754167051367 implements MigrationInterface {
                 "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
                 "name" character varying NOT NULL,
                 "normalized_name" character varying NOT NULL,
-                CONSTRAINT "PK_e7dc17249a1148a1970748eda99" PRIMARY KEY ("id")
+                CONSTRAINT "PK_tags_id" PRIMARY KEY ("id")
             )
         `);
 
@@ -129,8 +143,8 @@ export class InitialMigration1754167051367 implements MigrationInterface {
                 "name" character varying NOT NULL,
                 "description" text NOT NULL,
                 "story_trigger" boolean NOT NULL DEFAULT false,
-                CONSTRAINT "UQ_8b0be371d28245da6e4f4b61878" UNIQUE ("name"),
-                CONSTRAINT "PK_24dbc6126a28ff948da33e97d3b" PRIMARY KEY ("id")
+                CONSTRAINT "UQ_categories_name" UNIQUE ("name"),
+                CONSTRAINT "PK_categories_id" PRIMARY KEY ("id")
             )
         `);
 
@@ -238,7 +252,7 @@ export class InitialMigration1754167051367 implements MigrationInterface {
 
         // Add foreign key constraints
         await queryRunner.query(`
-            ALTER TABLE "rss_entries" 
+            ALTER TABLE "rss_feeds" 
             ADD CONSTRAINT "FK_689e63230bd06ad2fc129b9ca0f" 
             FOREIGN KEY ("source_id") REFERENCES "sources"("id") 
             ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -321,30 +335,37 @@ export class InitialMigration1754167051367 implements MigrationInterface {
             ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
 
-        // Create normalized materialized view for stories_hot_score using avg(article.created_at) for recency
-        // α = 0.5, β = 0.5 (example: equal weight)
-        // Normalize articles_count and recency to [0,1]
+        // Create normalized materialized view for stories_hot_score using avg(article.published_at) for recency
+        // α = 0.33, β = 0.33, γ = 0.34 (articles_count, recency, urgency with equal weight)
+        // Normalize articles_count, recency, and urgency to [0,1]
+
         await queryRunner.query(`
             CREATE MATERIALIZED VIEW stories_hot_score AS
             WITH base AS (
                 SELECT
                     s.id AS story_id,
                     COUNT(a.id) AS articles_count,
-                    (1.0 / (1 + (EXTRACT(EPOCH FROM (now() - to_timestamp(AVG(EXTRACT(EPOCH FROM re.published_at)))))/3600))) AS recency
+                    (1.0 / (1 + (EXTRACT(EPOCH FROM (now() - to_timestamp(AVG(EXTRACT(EPOCH FROM re.published_at)))))/3600))) AS recency,
+                    s.urgency::FLOAT AS urgency
                 FROM stories s
                 LEFT JOIN story_articles sa ON sa.story_id = s.id
                 LEFT JOIN articles a ON a.id = sa.article_id
                 LEFT JOIN scraped_articles sa2 ON a.scraped_article_id = sa2.id
                 LEFT JOIN rss_entries re ON sa2.rss_entry_id = re.id
-                GROUP BY s.id
+                GROUP BY s.id, s.urgency
             ),
             max_vals AS (
-                SELECT MAX(articles_count) AS max_articles, MAX(recency) AS max_recency FROM base
+                SELECT 
+                    MAX(articles_count) AS max_articles, 
+                    MAX(recency) AS max_recency,
+                    MAX(urgency) AS max_urgency
+                FROM base
             )
             SELECT
                 b.story_id,
-                (0.5 * (CASE WHEN m.max_articles > 0 THEN b.articles_count / m.max_articles ELSE 0 END)
-                 + 0.5 * (CASE WHEN m.max_recency > 0 THEN b.recency / m.max_recency ELSE 0 END)) AS score
+                (0.33 * (CASE WHEN m.max_articles > 0 THEN b.articles_count / m.max_articles ELSE 0 END)
+                 + 0.33 * (CASE WHEN m.max_recency > 0 THEN b.recency / m.max_recency ELSE 0 END)
+                 + 0.34 * (CASE WHEN m.max_urgency > 0 THEN b.urgency / m.max_urgency ELSE 0 END)) AS score
             FROM base b CROSS JOIN max_vals m
         `);
     }

@@ -6,9 +6,9 @@ import {
   JoinColumn,
   Index,
 } from 'typeorm';
-import { Source } from './source.entity';
 import { ScrapedArticle } from './scraped-article.entity';
 import { BaseEntity } from './base.entity';
+import { RssFeed } from './rss-feed.entity';
 
 @Entity('rss_entries')
 export class RssEntry extends BaseEntity {
@@ -31,9 +31,9 @@ export class RssEntry extends BaseEntity {
   @Column({ type: 'boolean', name: 'is_enqueued', default: false })
   isEnqueued: boolean;
 
-  @ManyToOne(() => Source, (source) => source.rssEntries)
-  @JoinColumn({ name: 'source_id' })
-  source: Source;
+  @ManyToOne(() => RssFeed, (rssFeed) => rssFeed.rssEntries)
+  @JoinColumn({ name: 'rss_feed_id' })
+  rssFeed: RssFeed;
 
   @OneToOne(() => ScrapedArticle, (scrapedArticle) => scrapedArticle.rssEntry)
   scrapedArticle: ScrapedArticle;

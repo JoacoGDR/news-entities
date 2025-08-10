@@ -2,32 +2,59 @@ import 'reflect-metadata';
 import { AppDataSource } from '../data-source';
 import { Source } from '../entities/source.entity';
 import { Category } from '../entities';
+import { RssFeed } from '../entities/rss-feed.entity';
 
 const sampleSources = [
   {
     name: 'Clarín',
-    rssFeedUrl: 'https://www.clarin.com/rss/lo-ultimo/',
+    rssFeeds: [
+      {
+        url: 'https://www.clarin.com/rss/lo-ultimo/',
+      }
+    ],
     domain: 'clarin.com',
     location: 'Argentina',
   },
   {
     name: 'Pagina 12',
-    rssFeedUrl: 'https://www.pagina12.com.ar/rss/portada',
+    rssFeeds: [
+      {
+        url: 'https://www.pagina12.com.ar/rss/portada',
+      }
+    ],
     domain: 'pagina12.com.ar',
     location: 'Argentina',
   },
   {
     name: 'Perfil',
-    rssFeedUrl: 'https://www.perfil.com/feed',
+    rssFeeds: [
+      {
+        url: 'https://www.perfil.com/feed',
+      }
+    ],
     domain: 'perfil.com',
     location: 'Argentina',
   },
   {
     name: 'La Nacion',
-    rssFeedUrl: 'https://www.perfil.com/feed',
-    domain: 'perfil.com',
+    rssFeeds: [
+      {
+        url: 'https://www.lanacion.com.ar/rss/portada',
+      }
+    ],
+    domain: 'lanacion.com.ar',
     location: 'Argentina',
   },
+  {
+    name: 'La Derecha Diario',
+    rssFeeds: [
+      {
+        url: 'https://derechadiario.com.ar/rss/last-posts',
+      }
+    ],
+    domain: 'derechadiario.com.ar',
+    location: 'Argentina',
+  }
 ];
 
 export const ARTICLE_CATEGORIES = {
@@ -117,7 +144,11 @@ export async function seedSources(): Promise<void> {
     const sources = sampleSources.map(sourceData => {
       const source = new Source();
       source.name = sourceData.name;
-      source.rssFeedUrl = sourceData.rssFeedUrl;
+      source.rssFeeds = sourceData.rssFeeds.map(rssFeedData => {
+        const rssFeed = new RssFeed();
+        rssFeed.url = rssFeedData.url;
+        return rssFeed;
+      });
       source.domain = sourceData.domain;
       source.location = sourceData.location;
       source.lastFetchedAt = new Date();

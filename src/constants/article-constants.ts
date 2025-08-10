@@ -60,12 +60,20 @@ export const SENTIMENT_LABELS = {
   NA: 'NA',
 } as const;
 
+export const URGENCY_LABELS = {
+  LOW: 'LOW',
+  MODERATE: 'MODERATE',
+  HIGH: 'HIGH',
+  BREAKING: 'BREAKING',
+} as const;
+
 export type ArticleType = (typeof ARTICLE_TYPES)[keyof typeof ARTICLE_TYPES];
 export type ArticleCategory = (typeof ARTICLE_CATEGORIES)[keyof typeof ARTICLE_CATEGORIES];
 export type ArticleScope = (typeof ARTICLE_SCOPES)[keyof typeof ARTICLE_SCOPES];
 export type EconomicBiasLabel = (typeof ECONOMIC_BIAS_LABELS)[keyof typeof ECONOMIC_BIAS_LABELS];
 export type SocialBiasLabel = (typeof SOCIAL_BIAS_LABELS)[keyof typeof SOCIAL_BIAS_LABELS];
 export type SentimentLabel = (typeof SENTIMENT_LABELS)[keyof typeof SENTIMENT_LABELS];
+export type UrgencyLabel = (typeof URGENCY_LABELS)[keyof typeof URGENCY_LABELS];
 
 export const ARTICLE_TYPES_DESCRIPTIONS: Record<ArticleType, string> = {
   [ARTICLE_TYPES.OPINION]: "An article primarily intended to express the author's personal views, beliefs, or arguments on a current event or affair.",
@@ -167,6 +175,24 @@ export const SENTIMENT_SCORE_MAP: Record<SentimentLabel, number | null> = {
   [SENTIMENT_LABELS.VERY_SUPPORTIVE]: 3,
   [SENTIMENT_LABELS.NA]: null,
 } as const;
+
+export const URGENCY_LABELS_DESCRIPTIONS: Record<UrgencyLabel, string> = {
+  [URGENCY_LABELS.LOW]: "Not time-sensitive — information will remain relevant for weeks or months; no immediate developments expected. Examples: in-depth features, historical retrospectives, evergreen how-to guides.",
+  [URGENCY_LABELS.MODERATE]: "Time-relevant but not critical — updates may occur over days; readers benefit from timely awareness but urgency is low. Examples: scheduled events, policy changes announced for the near future, sports match previews.",
+  [URGENCY_LABELS.HIGH]: "Time-sensitive — important developments occurring now or soon; situation may change within hours. Examples: government announcements taking effect immediately, ongoing protests, market-moving business news.",
+  [URGENCY_LABELS.BREAKING]: "Critical and unfolding — new information emerging rapidly; immediate updates essential. Examples: natural disasters, major accidents, sudden political events, significant security threats."
+};
+
+export const URGENCY_LABELS_NUMERIC_MAP: Record<UrgencyLabel, number | null> = {
+  [URGENCY_LABELS.LOW]: 1,
+  [URGENCY_LABELS.MODERATE]: 2,
+  [URGENCY_LABELS.HIGH]: 3,
+  [URGENCY_LABELS.BREAKING]: 4,
+} as const;
+
+export function mapUrgencyToNumber(label: UrgencyLabel): number | null {
+  return URGENCY_LABELS_NUMERIC_MAP[label] ?? null;
+}
 
 export function mapEconomicBiasToNumber(
   label: EconomicBiasLabel

@@ -2,10 +2,9 @@ import {
   Entity,
   Column,
   OneToMany,
-  Index,
 } from 'typeorm';
-import { RssEntry } from './rss-entry.entity';
 import { BaseEntity } from './base.entity';
+import { RssFeed } from './rss-feed.entity';
 
 @Entity('sources')
 export class Source extends BaseEntity {
@@ -24,6 +23,6 @@ export class Source extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true, name: 'last_fetched_at' })
   lastFetchedAt: Date;
 
-  @OneToMany(() => RssEntry, (rssEntry) => rssEntry.source)
-  rssEntries: RssEntry[];
+  @OneToMany(() => RssFeed, (rssFeed) => rssFeed.source)
+  rssFeeds: RssFeed[];
 }

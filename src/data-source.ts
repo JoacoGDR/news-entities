@@ -3,6 +3,7 @@ import { DataSource } from "typeorm";
 import { Article } from "./entities/article.entity";
 import { Story } from "./entities/story.entity";
 import { Source } from "./entities/source.entity";
+import { RssFeed } from "./entities/rss-feed.entity";
 import { RssEntry } from "./entities/rss-entry.entity";
 import { ScrapedArticle } from "./entities/scraped-article.entity";
 import { Fact } from "./entities/fact.entity";
@@ -19,7 +20,7 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME || "news_scraper",
   synchronize: false,
   logging: process.env.NODE_ENV === "development",
-  entities: [Article, Story, Source, RssEntry, ScrapedArticle, Fact, Tag, Category, StoryHotScore],
+  entities: [Article, Story, Source, RssEntry, ScrapedArticle, Fact, Tag, Category, StoryHotScore, RssFeed],
   migrations: [__dirname + "/migrations/*.ts"],
   migrationsRun: false,
   migrationsTableName: "typeorm_migrations",

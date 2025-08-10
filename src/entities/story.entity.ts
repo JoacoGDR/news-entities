@@ -9,7 +9,6 @@ import { Fact } from './fact.entity';
 import { Tag } from './tag.entity';
 import { Article } from './article.entity';
 import { BaseEntity } from './base.entity';
-
 @Entity('stories')
 export class Story extends BaseEntity {
 
@@ -18,6 +17,9 @@ export class Story extends BaseEntity {
 
   @Column({ type: 'text' })
   summary: string;
+
+  @Column({ type: 'int'})
+  urgency: number;
 
   @ManyToMany(() => Article, (article) => article.stories)
   @JoinTable({
