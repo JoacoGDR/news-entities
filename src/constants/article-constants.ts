@@ -68,13 +68,16 @@ export type SocialBiasLabel = (typeof SOCIAL_BIAS_LABELS)[keyof typeof SOCIAL_BI
 export type SentimentLabel = (typeof SENTIMENT_LABELS)[keyof typeof SENTIMENT_LABELS];
 
 export const ARTICLE_TYPES_DESCRIPTIONS: Record<ArticleType, string> = {
-  [ARTICLE_TYPES.OPINION]: "An article primarily intended to express the author's personal views, beliefs, or arguments on a topic.",
+  [ARTICLE_TYPES.OPINION]: "An article primarily intended to express the author's personal views, beliefs, or arguments on a current event or affair.",
   [ARTICLE_TYPES.ANALYSIS]: 'An article that interprets or contextualizes recent events, combining factual reporting with explanatory or evaluative content.',
   [ARTICLE_TYPES.NEWS]: 'An article focused on reporting current events or factual developments with minimal interpretation or commentary.',
   [ARTICLE_TYPES.DISCARDED]: `An article that will be discarded, if it meets any of the following conditions:
-      1. Failed to scrape properly (e.g., due to paywalls or formatting issues)
-      2. Consist of horoscopes, astrology content, or similar non-news editorial content
-      3. Is a weather forecast`,
+        1. Technical issues – The article failed to scrape properly (e.g., due to paywalls, missing content, or formatting errors).
+        2. Non-news editorial content – Includes horoscopes, astrology, self-help pieces, or other entertainment/editorial content not rooted in factual current events.
+        3. Routine informational content – Such as daily weather forecasts, lottery results, or other regularly scheduled public service updates.
+        4. Non-current or historical content – Includes biographies, historical anecdotes, or retrospectives that are not directly tied to a current event or ongoing situation.
+        5. Opinion or analysis with no clear news hook – Essays, opinion pieces, or analysis articles that are not grounded in a timely, newsworthy event or development.
+        6. Lacks relevance or significance – Articles that may technically report on a current topic but are trivial, niche, or unlikely to be of general public interest.`
 } as const;
 
 export const ARTICLE_CATEGORIES_DESCRIPTIONS: Record<ArticleCategory, string> = {
