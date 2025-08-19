@@ -50,7 +50,7 @@ export class InitialMigration1754167051367 implements MigrationInterface {
                 "published_at" TIMESTAMP NOT NULL,
                 "fetched_at" TIMESTAMP NOT NULL,
                 "is_enqueued" boolean NOT NULL DEFAULT false,
-                "rss_feed_id" integer,
+                "rss_feed_id" integer REFERENCES "rss_feeds"("id") ON DELETE CASCADE,
                 CONSTRAINT "PK_rss_entries_id" PRIMARY KEY ("id")
             )
         `);

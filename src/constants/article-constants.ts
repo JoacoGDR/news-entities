@@ -81,7 +81,7 @@ export const ARTICLE_TYPES_DESCRIPTIONS: Record<ArticleType, string> = {
   [ARTICLE_TYPES.NEWS]: 'An article focused on reporting current events or factual developments with minimal interpretation or commentary.',
   [ARTICLE_TYPES.DISCARDED]: `An article that will be discarded, if it meets any of the following conditions:
         1. Technical issues – The article failed to scrape properly (e.g., due to paywalls, missing content, or formatting errors).
-        2. Non-news editorial content – Includes horoscopes, astrology, self-help pieces, or other entertainment/editorial content not rooted in factual current events.
+        2. Non-news editorial content – Includes horoscopes, astrology, lotteries, self-help pieces, or other entertainment/editorial content not rooted in factual current events.
         3. Routine informational content – Such as daily weather forecasts, lottery results, or other regularly scheduled public service updates.
         4. Non-current or historical content – Includes biographies, historical anecdotes, or retrospectives that are not directly tied to a current event or ongoing situation.
         5. Opinion or analysis with no clear news hook – Essays, opinion pieces, or analysis articles that are not grounded in a timely, newsworthy event or development.

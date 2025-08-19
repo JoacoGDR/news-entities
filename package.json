@@ -1,6 +1,6 @@
 {
   "name": "@joacogdelr/news-entities",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "description": "Shared entities and migrations for news applications",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

@@ -9,8 +9,11 @@ const sampleSources = [
     name: 'Clarín',
     rssFeeds: [
       {
-        url: 'https://www.clarin.com/rss/lo-ultimo/',
-      }
+        url: 'https://www.clarin.com/rss/politica/',
+      },
+      {
+        url: 'https://www.clarin.com/rss/economia/',
+      },
     ],
     domain: 'clarin.com',
     location: 'Argentina',
@@ -19,8 +22,11 @@ const sampleSources = [
     name: 'Pagina 12',
     rssFeeds: [
       {
-        url: 'https://www.pagina12.com.ar/rss/portada',
-      }
+        url: 'https://www.pagina12.com.ar/rss/secciones/economia/notas',
+      },
+      {
+        url: 'https://www.pagina12.com.ar/rss/secciones/el-pais/notas',
+      },
     ],
     domain: 'pagina12.com.ar',
     location: 'Argentina',
@@ -29,8 +35,11 @@ const sampleSources = [
     name: 'Perfil',
     rssFeeds: [
       {
-        url: 'https://www.perfil.com/feed',
-      }
+        url: 'https://www.perfil.com/feed/economia',
+      },
+      {
+        url: 'https://www.perfil.com/feed/politica',
+      },
     ],
     domain: 'perfil.com',
     location: 'Argentina',
@@ -39,7 +48,7 @@ const sampleSources = [
     name: 'La Nacion',
     rssFeeds: [
       {
-        url: 'https://www.lanacion.com.ar/rss/portada',
+        url: 'https://www.lanacion.com.ar/arc/outboundfeeds/rss/?outputType=xml',
       }
     ],
     domain: 'lanacion.com.ar',
@@ -49,10 +58,26 @@ const sampleSources = [
     name: 'La Derecha Diario',
     rssFeeds: [
       {
-        url: 'https://derechadiario.com.ar/rss/last-posts',
-      }
+        url: 'https://derechadiario.com.ar/rss/cat/economia',
+      },
+      {
+        url: 'https://derechadiario.com.ar/rss/cat/politica',
+      },
     ],
     domain: 'derechadiario.com.ar',
+    location: 'Argentina',
+  },
+  {
+    name: 'Infobae',
+    rssFeeds: [
+      {
+        url: 'https://www.infobae.com/arc/outboundfeeds/news-sitemap2/category/economia/',
+      },
+      {
+        url: 'https://www.infobae.com/arc/outboundfeeds/news-sitemap2/category/politica/',
+      },
+    ],
+    domain: 'infobae.com',
     location: 'Argentina',
   }
 ];
@@ -68,43 +93,43 @@ export const ARTICLE_CATEGORIES = {
   },
   SOCIETY: {
     description: 'An article that focuses on social issues, demographics, and cultural topics.',
-    storyTrigger: true,
+    storyTrigger: false,
   },
   TECHNOLOGY: {
     description: 'An article that focuses on technological innovations, digital trends, and tech industry.',
-    storyTrigger: true,
+    storyTrigger: false,
   },
   SCIENCE: {
     description: 'An article that focuses on scientific research, discoveries, and academic findings.',
-    storyTrigger: true,
+    storyTrigger: false,
   },
   HEALTH: {
     description: 'An article that focuses on medical news, public health, and healthcare policy.',
-    storyTrigger: true,
+    storyTrigger: false,
   },
   SPORTS: {
     description: 'An article that focuses on athletic competitions, sports industry, and recreational activities.',
-    storyTrigger: true,
+    storyTrigger: false,
   },
   ENTERTAINMENT: {
     description: 'An article that focuses on media, celebrities, arts, and popular culture.',
-    storyTrigger: true,
+    storyTrigger: false,
   },
   ENVIRONMENT: {
     description: 'An article that focuses on climate change, conservation, and environmental policy.',
-    storyTrigger: true,
+    storyTrigger: false,
   },
   EDUCATION: {
     description: 'An article that focuses on schools, universities, and educational policy.',
-    storyTrigger: true,
+    storyTrigger: false,
   },
   CRIME: {
     description: 'An article that focuses on criminal activity, law enforcement, and legal proceedings.',
-    storyTrigger: true,
+    storyTrigger: false,
   },
   BUSINESS: {
     description: 'An article that focuses on corporate news, industry developments, and business strategy.',
-    storyTrigger: true,
+    storyTrigger: false,
   },
   WEATHER: {
     description: 'An article that focuses on weather conditions and meteorological events.',
