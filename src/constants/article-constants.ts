@@ -50,13 +50,13 @@ export const SOCIAL_BIAS_LABELS = {
 } as const;
 
 export const SENTIMENT_LABELS = {
-  VERY_CRITICAL: 'VERY_CRITICAL',
-  CRITICAL: 'CRITICAL',
-  SOMEWHAT_CRITICAL: 'SOMEWHAT_CRITICAL',
+  VERY_BAD_NEWS: 'VERY_BAD_NEWS',
+  BAD_NEWS: 'BAD_NEWS',
+  SOMEWHAT_BAD_NEWS: 'SOMEWHAT_BAD_NEWS',
   NEUTRAL: 'NEUTRAL',
-  SOMEWHAT_SUPPORTIVE: 'SOMEWHAT_SUPPORTIVE',
-  SUPPORTIVE: 'SUPPORTIVE',
-  VERY_SUPPORTIVE: 'VERY_SUPPORTIVE',
+  SOMEWHAT_GOOD_NEWS: 'SOMEWHAT_GOOD_NEWS',
+  GOOD_NEWS: 'GOOD_NEWS',
+  VERY_GOOD_NEWS: 'VERY_GOOD_NEWS',
   NA: 'NA',
 } as const;
 
@@ -155,24 +155,25 @@ export const SOCIAL_BIAS_NUMERIC_MAP: Record<SocialBiasLabel, number | null> = {
 } as const;
 
 export const SENTIMENT_LABELS_DESCRIPTIONS: Record<SentimentLabel, string> = {
-  [SENTIMENT_LABELS.VERY_CRITICAL]: 'Strongly disapproves of or opposes the subject in tone or language',
-  [SENTIMENT_LABELS.CRITICAL]: 'Expresses clear disapproval or negative assessment of the subject',
-  [SENTIMENT_LABELS.SOMEWHAT_CRITICAL]: 'Conveys mild disapproval or skepticism toward the subject',
-  [SENTIMENT_LABELS.NEUTRAL]: 'Takes a balanced or impartial stance with no clear positive or negative tone',
-  [SENTIMENT_LABELS.SOMEWHAT_SUPPORTIVE]: 'Expresses mild approval or favorable leanings toward the subject',
-  [SENTIMENT_LABELS.SUPPORTIVE]: 'Conveys clear approval or endorsement of the subject',
-  [SENTIMENT_LABELS.VERY_SUPPORTIVE]: 'Strongly endorses or praises the subject with highly positive language',
-  [SENTIMENT_LABELS.NA]: 'Not applicable or unclear',
+  [SENTIMENT_LABELS.VERY_BAD_NEWS]: 'News that conveys severe negative impact or tragedy, such as large-scale disasters, mass casualties, or catastrophic economic failure.',
+  [SENTIMENT_LABELS.BAD_NEWS]: 'News that reports negative developments with significant but less severe consequences, such as major layoffs, regional crises, or serious political instability.',
+  [SENTIMENT_LABELS.SOMEWHAT_BAD_NEWS]: 'News that has a mild or indirect negative tone, such as minor economic declines, moderate policy criticism, or local incidents with limited scope.',
+  [SENTIMENT_LABELS.NEUTRAL]: 'News that is purely factual or balanced, presenting information without emotional charge or clear positive/negative framing.',
+  [SENTIMENT_LABELS.SOMEWHAT_GOOD_NEWS]: 'News with a mildly positive angle, such as small improvements, positive forecasts, or uplifting human interest stories.',
+  [SENTIMENT_LABELS.GOOD_NEWS]: 'News with clear positive implications, like major policy successes, significant scientific breakthroughs, or strong economic performance.',
+  [SENTIMENT_LABELS.VERY_GOOD_NEWS]: 'Exceptionally positive news with widespread or historic impact, such as a major peace treaty, a cure for a disease, or a large-scale humanitarian success.',
+  [SENTIMENT_LABELS.NA]: 'News that cannot be categorized due to insufficient content, ambiguity, or irrelevance.',
 } as const;
 
+
 export const SENTIMENT_SCORE_MAP: Record<SentimentLabel, number | null> = {
-  [SENTIMENT_LABELS.VERY_CRITICAL]: -3,
-  [SENTIMENT_LABELS.CRITICAL]: -2,
-  [SENTIMENT_LABELS.SOMEWHAT_CRITICAL]: -1,
+  [SENTIMENT_LABELS.VERY_BAD_NEWS]: -3,
+  [SENTIMENT_LABELS.BAD_NEWS]: -2,
+  [SENTIMENT_LABELS.SOMEWHAT_BAD_NEWS]: -1,
   [SENTIMENT_LABELS.NEUTRAL]: 0,
-  [SENTIMENT_LABELS.SOMEWHAT_SUPPORTIVE]: 1,
-  [SENTIMENT_LABELS.SUPPORTIVE]: 2,
-  [SENTIMENT_LABELS.VERY_SUPPORTIVE]: 3,
+  [SENTIMENT_LABELS.SOMEWHAT_GOOD_NEWS]: 1,
+  [SENTIMENT_LABELS.GOOD_NEWS]: 2,
+  [SENTIMENT_LABELS.VERY_GOOD_NEWS]: 3,
   [SENTIMENT_LABELS.NA]: null,
 } as const;
 
