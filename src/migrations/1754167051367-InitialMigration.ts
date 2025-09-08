@@ -107,7 +107,6 @@ export class InitialMigration1754167051367 implements MigrationInterface {
                 "id" SERIAL NOT NULL,
                 "created_at" TIMESTAMP NOT NULL DEFAULT now(),
                 "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
-                "name" character varying NOT NULL,
                 "content" text NOT NULL,
                 "embedding" vector(1536),
                 "story_id" integer,

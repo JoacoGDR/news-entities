@@ -11,9 +11,6 @@ import { BaseEntity } from './base.entity';
 
 @Entity('facts')
 export class Fact extends BaseEntity {
-  @Column({ type: 'varchar' })
-  name: string;
-
   @Column({ type: 'text' })
   content: string;
 
