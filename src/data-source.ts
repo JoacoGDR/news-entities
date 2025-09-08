@@ -45,4 +45,4 @@ export const createDataSource = (config?: Partial<typeof AppDataSource.options>)
     ...AppDataSource.options,
     ...config,
   } as any);
-}; 
+};
