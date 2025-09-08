@@ -10,6 +10,7 @@ import { Fact } from "./entities/fact.entity";
 import { Tag } from "./entities/tag.entity";
 import { Category } from "./entities/category.entity";
 import { StoryHotScore } from "./entities/story-hot-score.entity";
+import { StoryDevelopment } from "./entities/story-development.entity";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -20,7 +21,19 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME || "news_scraper",
   synchronize: false,
   logging: process.env.NODE_ENV === "development",
-  entities: [Article, Story, Source, RssEntry, ScrapedArticle, Fact, Tag, Category, StoryHotScore, RssFeed],
+  entities: [
+    Article,
+    Story,
+    StoryDevelopment,
+    Source,
+    RssEntry,
+    RssFeed,
+    ScrapedArticle,
+    Fact,
+    Tag,
+    Category,
+    StoryHotScore
+  ],
   migrations: [__dirname + "/migrations/*.ts"],
   migrationsRun: false,
   migrationsTableName: "typeorm_migrations",

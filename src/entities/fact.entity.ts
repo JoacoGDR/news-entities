@@ -17,17 +17,17 @@ export class Fact extends BaseEntity {
   @Column({ type: 'text' })
   content: string;
 
-  @Column({ 
+  @Column({
     type: 'text',
     nullable: true,
     comment: 'Embedding vector for similarity search (1536 dimensions for OpenAI text-embedding-3-small)'
   })
   embedding: string | null;
 
-  @ManyToOne(() => Story, (story) => story.facts)
+  @ManyToOne(() => Article, (article) => article.facts)
   @JoinColumn({ name: 'story_id' })
-  story: Story;
+  article: Article;
 
-  @ManyToMany(() => Article, (article) => article.facts)
-  articles: Article[];
+  @ManyToMany(() => Story, (story) => story.facts)
+  stories: Story[];
 }

@@ -82,15 +82,23 @@ export class InitialMigration1754167051367 implements MigrationInterface {
                 "id" SERIAL NOT NULL,
                 "created_at" TIMESTAMP NOT NULL DEFAULT now(),
                 "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
-                "urgency" integer NOT NULL DEFAULT 1,
                 "title" character varying NOT NULL,
                 "summary" text NOT NULL,
                 CONSTRAINT "PK_stories_id" PRIMARY KEY ("id")
             )
         `);
 
+
+        // Create story_developments table
         await queryRunner.query(`
-            CREATE INDEX "IDX_stories_urgency" ON "stories" ("urgency")
+            CREATE TABLE "story_developments" (
+                "id" SERIAL NOT NULL,
+                "created_at" TIMESTAMP NOT NULL DEFAULT now(),
+                "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
+                "development" character varying NOT NULL,
+                "story_id" integer REFERENCES "stories"("id") ON DELETE CASCADE,
+                CONSTRAINT "PK_story_developments_id" PRIMARY KEY ("id")
+            )
         `);
 
         // Create facts table with vector embedding
@@ -218,19 +226,19 @@ export class InitialMigration1754167051367 implements MigrationInterface {
 
         // Create junction table for article-facts many-to-many relationship
         await queryRunner.query(`
-            CREATE TABLE "article_facts" (
-                "article_id" integer NOT NULL,
-                "fact_id" integer NOT NULL,
-                CONSTRAINT "PK_e76932c7b45041deff4b0f328ee" PRIMARY KEY ("article_id", "fact_id")
+            CREATE TABLE "story_facts" (
+                "story_id" integer,
+                "fact_id" integer,
+                CONSTRAINT "PK_e76932c7b45041deff4b0f328ee" PRIMARY KEY ("story_id", "fact_id")
             )
         `);
 
-        // Create indexes for article_facts junction table
+        // Create indexes for story_facts junction table
         await queryRunner.query(`
-            CREATE INDEX "IDX_article_facts_article_id" ON "article_facts" ("article_id")
+            CREATE INDEX "IDX_story_facts_story_id" ON "story_facts" ("story_id")
         `);
         await queryRunner.query(`
-            CREATE INDEX "IDX_article_facts_fact_id" ON "article_facts" ("fact_id")
+            CREATE INDEX "IDX_story_facts_fact_id" ON "story_facts" ("fact_id")
         `);
 
         // Create junction table for article-categories many-to-many relationship
@@ -253,120 +261,79 @@ export class InitialMigration1754167051367 implements MigrationInterface {
         // Add foreign key constraints
         await queryRunner.query(`
             ALTER TABLE "rss_feeds" 
-            ADD CONSTRAINT "FK_689e63230bd06ad2fc129b9ca0f" 
-            FOREIGN KEY ("source_id") REFERENCES "sources"("id") 
+            ADD CONSTRAINT "FK_689e63230bd06ad2fc129b9ca0f"
+            FOREIGN KEY ("source_id") REFERENCES "sources"("id")
             ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
 
         await queryRunner.query(`
             ALTER TABLE "scraped_articles" 
-            ADD CONSTRAINT "FK_f19919a4345508c18853edc9da9" 
-            FOREIGN KEY ("rss_entry_id") REFERENCES "rss_entries"("id") 
+            ADD CONSTRAINT "FK_f19919a4345508c18853edc9da9"
+            FOREIGN KEY ("rss_entry_id") REFERENCES "rss_entries"("id")
             ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
 
         await queryRunner.query(`
-            ALTER TABLE "facts" 
-            ADD CONSTRAINT "FK_f1fed3628488572384d959be64e" 
-            FOREIGN KEY ("story_id") REFERENCES "stories"("id") 
+            ALTER TABLE "articles"
+            ADD CONSTRAINT "FK_417f2d5fec6a11a763729f994af"
+            FOREIGN KEY ("scraped_article_id") REFERENCES "scraped_articles"("id")
             ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
 
         await queryRunner.query(`
-            ALTER TABLE "articles" 
-            ADD CONSTRAINT "FK_417f2d5fec6a11a763729f994af" 
-            FOREIGN KEY ("scraped_article_id") REFERENCES "scraped_articles"("id") 
-            ON DELETE NO ACTION ON UPDATE NO ACTION
-        `);
-
-        await queryRunner.query(`
-            ALTER TABLE "story_articles" 
-            ADD CONSTRAINT "FK_350dbafe1abfab5dff7ff13b12f" 
-            FOREIGN KEY ("story_id") REFERENCES "stories"("id") 
+            ALTER TABLE "story_articles"
+            ADD CONSTRAINT "FK_350dbafe1abfab5dff7ff13b12f"
+            FOREIGN KEY ("story_id") REFERENCES "stories"("id")
             ON DELETE CASCADE ON UPDATE CASCADE
         `);
 
         await queryRunner.query(`
-            ALTER TABLE "story_articles" 
-            ADD CONSTRAINT "FK_836ba49984374440dd9b2cd55af" 
-            FOREIGN KEY ("article_id") REFERENCES "articles"("id") 
+            ALTER TABLE "story_articles"
+            ADD CONSTRAINT "FK_836ba49984374440dd9b2cd55af"
+            FOREIGN KEY ("article_id") REFERENCES "articles"("id")
             ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
 
         await queryRunner.query(`
-            ALTER TABLE "story_tags" 
-            ADD CONSTRAINT "FK_818bd0326f1417b77cb55f0b80f" 
-            FOREIGN KEY ("story_id") REFERENCES "stories"("id") 
+            ALTER TABLE "story_tags"
+            ADD CONSTRAINT "FK_818bd0326f1417b77cb55f0b80f"
+            FOREIGN KEY ("story_id") REFERENCES "stories"("id")
             ON DELETE CASCADE ON UPDATE CASCADE
         `);
 
         await queryRunner.query(`
-            ALTER TABLE "story_tags" 
-            ADD CONSTRAINT "FK_24edf1076b3af707856d5fcccd3" 
-            FOREIGN KEY ("tag_id") REFERENCES "tags"("id") 
+            ALTER TABLE "story_tags"
+            ADD CONSTRAINT "FK_24edf1076b3af707856d5fcccd3"
+            FOREIGN KEY ("tag_id") REFERENCES "tags"("id")
             ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
 
         await queryRunner.query(`
-            ALTER TABLE "article_facts" 
-            ADD CONSTRAINT "FK_00c6e9634f4c42a68e06a2adef7" 
-            FOREIGN KEY ("article_id") REFERENCES "articles"("id") 
+            ALTER TABLE "article_categories"
+            ADD CONSTRAINT "FK_6919cd26646fd24f7aac8166d46"
+            FOREIGN KEY ("article_id") REFERENCES "articles"("id")
             ON DELETE CASCADE ON UPDATE CASCADE
         `);
 
         await queryRunner.query(`
-            ALTER TABLE "article_facts" 
-            ADD CONSTRAINT "FK_28240cc682f15437842015287bc" 
-            FOREIGN KEY ("fact_id") REFERENCES "facts"("id") 
+            ALTER TABLE "article_categories"
+            ADD CONSTRAINT "FK_2074448c3764e149b3b0541c2a7"
+            FOREIGN KEY ("category_id") REFERENCES "categories"("id")
             ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
 
         await queryRunner.query(`
-            ALTER TABLE "article_categories" 
-            ADD CONSTRAINT "FK_6919cd26646fd24f7aac8166d46" 
-            FOREIGN KEY ("article_id") REFERENCES "articles"("id") 
-            ON DELETE CASCADE ON UPDATE CASCADE
+            ALTER TABLE "story_facts"
+            ADD CONSTRAINT "FK_28240cc682f15437842015287bc"
+            FOREIGN KEY ("fact_id") REFERENCES "facts"("id")
+            ON DELETE CASCADE
         `);
 
         await queryRunner.query(`
-            ALTER TABLE "article_categories" 
-            ADD CONSTRAINT "FK_2074448c3764e149b3b0541c2a7" 
-            FOREIGN KEY ("category_id") REFERENCES "categories"("id") 
-            ON DELETE NO ACTION ON UPDATE NO ACTION
-        `);
-
-        // Create normalized materialized view for stories_hot_score using avg(article.published_at) for recency
-        // α = 0.33, β = 0.33, γ = 0.34 (articles_count, recency, urgency with equal weight)
-        // Normalize articles_count, recency, and urgency to [0,1]
-
-        await queryRunner.query(`
-            CREATE MATERIALIZED VIEW stories_hot_score AS
-            WITH base AS (
-                SELECT
-                    s.id AS story_id,
-                    COUNT(a.id) AS articles_count,
-                    (1.0 / (1 + (EXTRACT(EPOCH FROM (now() - to_timestamp(AVG(EXTRACT(EPOCH FROM re.published_at)))))/3600))) AS recency,
-                    s.urgency::FLOAT AS urgency
-                FROM stories s
-                LEFT JOIN story_articles sa ON sa.story_id = s.id
-                LEFT JOIN articles a ON a.id = sa.article_id
-                LEFT JOIN scraped_articles sa2 ON a.scraped_article_id = sa2.id
-                LEFT JOIN rss_entries re ON sa2.rss_entry_id = re.id
-                GROUP BY s.id, s.urgency
-            ),
-            max_vals AS (
-                SELECT 
-                    MAX(articles_count) AS max_articles, 
-                    MAX(recency) AS max_recency,
-                    MAX(urgency) AS max_urgency
-                FROM base
-            )
-            SELECT
-                b.story_id,
-                (0.33 * (CASE WHEN m.max_articles > 0 THEN b.articles_count / m.max_articles ELSE 0 END)
-                 + 0.33 * (CASE WHEN m.max_recency > 0 THEN b.recency / m.max_recency ELSE 0 END)
-                 + 0.34 * (CASE WHEN m.max_urgency > 0 THEN b.urgency / m.max_urgency ELSE 0 END)) AS score
-            FROM base b CROSS JOIN max_vals m
+            ALTER TABLE "story_facts"
+            ADD CONSTRAINT "FK_350dbafe1abfab5dff7ff13b12f"
+            FOREIGN KEY ("story_id") REFERENCES "stories"("id")
+            ON DELETE CASCADE
         `);
     }
 

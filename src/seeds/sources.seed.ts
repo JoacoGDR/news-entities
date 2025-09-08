@@ -48,8 +48,11 @@ const sampleSources = [
     name: 'La Nacion',
     rssFeeds: [
       {
-        url: 'https://www.lanacion.com.ar/arc/outboundfeeds/rss/?outputType=xml',
-      }
+        url: 'https://www.lanacion.com.ar/arc/outboundfeeds/rss/category/politica/?outputType=xml',
+      },
+      {
+        url: 'https://www.lanacion.com.ar/arc/outboundfeeds/rss/category/economia/?outputType=xml',
+      },
     ],
     domain: 'lanacion.com.ar',
     location: 'Argentina',
@@ -71,10 +74,10 @@ const sampleSources = [
     name: 'Infobae',
     rssFeeds: [
       {
-        url: 'https://www.infobae.com/arc/outboundfeeds/news-sitemap2/category/economia/',
+        url: 'https://www.infobae.com/arc/outboundfeeds/rss/category/economia/?outputType=xml',
       },
       {
-        url: 'https://www.infobae.com/arc/outboundfeeds/news-sitemap2/category/politica/',
+        url: 'https://www.infobae.com/arc/outboundfeeds/rss/category/politica/?outputType=xml',
       },
     ],
     domain: 'infobae.com',
@@ -152,7 +155,7 @@ const sampleCategories = Object.entries(ARTICLE_CATEGORIES).map(([name, { descri
 export async function seedSources(): Promise<void> {
   try {
     console.log('🌱 Starting sources seed...');
-    
+
     if (!AppDataSource.isInitialized) {
       await AppDataSource.initialize();
       console.log('📡 Database connection initialized');

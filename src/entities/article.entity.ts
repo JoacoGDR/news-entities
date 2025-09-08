@@ -5,6 +5,7 @@ import {
   ManyToMany,
   JoinColumn,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { ScrapedArticle } from './scraped-article.entity';
 import { Story } from './story.entity';
@@ -27,7 +28,7 @@ export class Article extends BaseEntity {
   @Column({ type: 'varchar' })
   type: string;
 
-  @Column({ 
+  @Column({
     type: 'text',
     nullable: true,
     comment: 'Embedding vector for similarity search (1536 dimensions for OpenAI text-embedding-3-small)'
@@ -50,12 +51,7 @@ export class Article extends BaseEntity {
   @ManyToMany(() => Story, (story) => story.articles)
   stories: Story[];
 
-  @ManyToMany(() => Fact, (fact) => fact.articles)
-  @JoinTable({
-    name: 'article_facts',
-    joinColumn: { name: 'article_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'fact_id', referencedColumnName: 'id' },
-  })
+  @OneToMany(() => Fact, (fact) => fact.article)
   facts: Fact[];
 
   @ManyToMany(() => Category, (category) => category.articles)
