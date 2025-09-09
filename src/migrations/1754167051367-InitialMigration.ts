@@ -101,25 +101,6 @@ export class InitialMigration1754167051367 implements MigrationInterface {
             )
         `);
 
-        // Create facts table with vector embedding
-        await queryRunner.query(`
-            CREATE TABLE "facts" (
-                "id" SERIAL NOT NULL,
-                "created_at" TIMESTAMP NOT NULL DEFAULT now(),
-                "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
-                "content" text NOT NULL,
-                "embedding" vector(1536),
-                "story_id" integer,
-                CONSTRAINT "PK_facts_id" PRIMARY KEY ("id")
-            )
-        `);
-
-        // Add comment on facts embedding column
-        await queryRunner.query(`
-            COMMENT ON COLUMN "facts"."embedding" IS 'Embedding vector for similarity search (1536 dimensions for OpenAI text-embedding-3-small)'
-        `);
-
-        // Create tags table with vector embedding
         await queryRunner.query(`
             CREATE TABLE "tags" (
                 "id" SERIAL NOT NULL,
@@ -175,14 +156,29 @@ export class InitialMigration1754167051367 implements MigrationInterface {
             )
         `);
 
+            await queryRunner.query(`
+              CREATE TABLE "facts" (
+                  "id" SERIAL NOT NULL,
+                  "created_at" TIMESTAMP NOT NULL DEFAULT now(),
+                  "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
+                  "content" text NOT NULL,
+                  "embedding" vector(1536),
+                  "article_id" integer,
+                  CONSTRAINT "PK_facts_id" PRIMARY KEY ("id")
+              )
+          `);
+
+          // reference facts to articles
+          await queryRunner.query(`
+              ALTER TABLE "facts"
+              ADD CONSTRAINT "FK_facts_articles"
+              FOREIGN KEY ("article_id") REFERENCES "articles"("id")
+              ON DELETE CASCADE
+          `);
+
         // Index to speed up queries on articles.created_at
         await queryRunner.query(`
             CREATE INDEX IF NOT EXISTS "IDX_articles_created_at" ON "articles" ("created_at")
-        `);
-
-        // Add comment on articles embedding column
-        await queryRunner.query(`
-            COMMENT ON COLUMN "articles"."embedding" IS 'Embedding vector for similarity search (1536 dimensions for OpenAI text-embedding-3-small)'
         `);
 
         // Create junction table for story-articles many-to-many relationship

@@ -22,7 +22,7 @@ export class Fact extends BaseEntity {
   embedding: string | null;
 
   @ManyToOne(() => Article, (article) => article.facts)
-  @JoinColumn({ name: 'story_id' })
+  @JoinColumn({ name: 'article_id' })
   article: Article;
 
   @ManyToMany(() => Story, (story) => story.facts)
