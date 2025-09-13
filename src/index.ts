@@ -12,4 +12,4 @@ export { VectorTransformer } from './vector-transformer';
 export * from './vector-utils';
 
 // Export migration utilities if any
-export * from './migration-utils'; 
+export * from './migration-utils';

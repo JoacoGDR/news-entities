@@ -103,24 +103,15 @@ npm run migration:generate -- -n MigrationName
 ### Core Entities
 
 - **Source** - RSS feed sources
+- **RssFeed** - RSS feed
 - **RssEntry** - Raw RSS feed entries
 - **ScrapedArticle** - Scraped content from RSS entries
 - **Article** - Processed articles with AI analysis
 - **Story** - Collections of related articles
+- **StoryDevelopment** - A development of a Story
 - **Fact** - Facts extracted from stories
 - **Tag** - Tags associated with stories
 
-### Relationships
-
-```
-Source 1:N RssEntry 1:1 ScrapedArticle 1:1 Article N:M Story
-                                                |           |
-                                                N:M         1:N
-                                                |           |
-                                              Fact --------+
-                                                |
-                                              Story N:M Tag
-```
 
 ## Vector Embeddings
 
@@ -155,4 +146,11 @@ npm run build
 
 ```bash
 npm run build:watch
-``` 
+```
+
+### How to start up databases and run migrations
+```bash
+npm run build
+npm run reset-db
+npm run seed
+```
