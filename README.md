@@ -118,19 +118,17 @@ npm run migration:generate -- -n MigrationName
 The following entities support vector embeddings for similarity search:
 
 - Article.embedding
-- Fact.embedding  
-- Tag.embedding
 
-**Important**: 
+**Important**:
 - Database columns are `VECTOR(1536)` (PostgreSQL vector extension)
 - Entity properties are `string | null` for TypeORM compatibility
 - Use raw SQL queries for vector operations (e.g., `embedding <-> target_embedding`)
 
 Example vector similarity query:
 ```sql
-SELECT id, title, (embedding <-> $1) AS distance 
-FROM articles 
-ORDER BY embedding <-> $1 
+SELECT id, title, (embedding <-> $1) AS distance
+FROM articles
+ORDER BY embedding <-> $1
 LIMIT 10
 ```
 

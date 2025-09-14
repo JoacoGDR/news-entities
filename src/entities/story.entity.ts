@@ -19,6 +19,9 @@ export class Story extends BaseEntity {
   @Column({ type: 'text' })
   summary: string;
 
+  @Column({ type: 'varchar', nullable: true, name: 'cover_image_path' })
+  coverImagePath: string | null;
+
   @ManyToMany(() => Article, (article) => article.stories)
   @JoinTable({
     name: 'story_articles',

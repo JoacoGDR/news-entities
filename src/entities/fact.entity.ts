@@ -14,12 +14,6 @@ export class Fact extends BaseEntity {
   @Column({ type: 'text' })
   content: string;
 
-  @Column({
-    type: 'text',
-    nullable: true,
-  })
-  embedding: string | null;
-
   @ManyToOne(() => Article, (article) => article.facts)
   @JoinColumn({ name: 'article_id' })
   article: Article;
