@@ -35,14 +35,8 @@ export class Article extends BaseEntity {
   })
   embedding: string | null;
 
-  @Column({ type: 'int', default: null, name: 'economic_bias' })
-  economicBias: number | null;
-
-  @Column({ type: 'int', default: null, name: 'social_bias' })
-  socialBias: number | null;
-
-  @Column({ type: 'int', default: null })
-  sentiment: number | null;
+  @Column({ type: 'int', default: null})
+  bias: number | null;
 
   @OneToOne(() => ScrapedArticle, (scrapedArticle) => scrapedArticle.article)
   @JoinColumn({ name: 'scraped_article_id' })

@@ -86,66 +86,80 @@ const sampleSources = [
 ];
 
 export const ARTICLE_CATEGORIES = {
-  ECONOMY: {
+  ECONOMIA: {
+    name: 'ECONOMIA',
     description: 'An article that focuses on economic trends, markets, and financial matters.',
     storyTrigger: true,
   },
-  POLITICS: {
+  POLITICA: {
+    name: 'POLITICA',
     description: 'An article that focuses on government, elections, and political affairs.',
     storyTrigger: true,
   },
-  SOCIETY: {
+  SOCIEDAD: {
+    name: 'SOCIEDAD',
     description: 'An article that focuses on social issues, demographics, and cultural topics.',
     storyTrigger: false,
   },
-  TECHNOLOGY: {
+  TECNOLOGIA: {
+    name: 'TECNOLOGIA',
     description: 'An article that focuses on technological innovations, digital trends, and tech industry.',
     storyTrigger: false,
   },
-  SCIENCE: {
+  CIENCIA: {
+    name: 'CIENCIA',
     description: 'An article that focuses on scientific research, discoveries, and academic findings.',
     storyTrigger: false,
   },
-  HEALTH: {
+  SALUD: {
+    name: 'SALUD',
     description: 'An article that focuses on medical news, public health, and healthcare policy.',
     storyTrigger: false,
   },
-  SPORTS: {
+  DEPORTES: {
+    name: 'DEPORTES',
     description: 'An article that focuses on athletic competitions, sports industry, and recreational activities.',
     storyTrigger: false,
   },
-  ENTERTAINMENT: {
+  ENTRETENIMIENTO: {
+    name: 'ENTRETENIMIENTO',
     description: 'An article that focuses on media, celebrities, arts, and popular culture.',
     storyTrigger: false,
   },
-  ENVIRONMENT: {
+  MEDIO_AMBIENTE: {
+    name: 'MEDIO AMBIENTE',
     description: 'An article that focuses on climate change, conservation, and environmental policy.',
     storyTrigger: false,
   },
-  EDUCATION: {
+  EDUCACION: {
+    name: 'EDUCACION',
     description: 'An article that focuses on schools, universities, and educational policy.',
     storyTrigger: false,
   },
-  CRIME: {
+  CRIMEN: {
+    name: 'CRIMEN',
     description: 'An article that focuses on criminal activity, law enforcement, and legal proceedings.',
     storyTrigger: false,
   },
-  BUSINESS: {
+  NEGOCIOS: {
+    name: 'NEGOCIOS',
     description: 'An article that focuses on corporate news, industry developments, and business strategy.',
     storyTrigger: false,
   },
-  WEATHER: {
+  CLIMA: {
+    name: 'CLIMA',
     description: 'An article that focuses on weather conditions and meteorological events.',
     storyTrigger: false,
   },
-  OTHER: {
+  OTRO: {
+    name: 'OTRO',
     description: 'An article that does not fit into any of the other categories.',
     storyTrigger: false,
   },
 } as const;
 
 
-const sampleCategories = Object.entries(ARTICLE_CATEGORIES).map(([name, { description, storyTrigger }]) => ({
+const sampleCategories = Object.entries(ARTICLE_CATEGORIES).map(([_,{ name, description, storyTrigger }]) => ({
   name,
   description,
   storyTrigger,
