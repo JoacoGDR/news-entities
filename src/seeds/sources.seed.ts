@@ -82,6 +82,19 @@ const sampleSources = [
     ],
     domain: 'infobae.com',
     location: 'Argentina',
+  },
+  {
+    name: 'Ámbito',
+    location: 'Argentina',
+    domain: 'ambito.com',
+    rssFeeds: [
+      {
+        url: 'https://www.ambito.com/rss/pages/politica.xml/',
+      },
+      {
+        url: 'https://www.ambito.com/rss/pages/economia.xml',
+      },
+    ],
   }
 ];
 

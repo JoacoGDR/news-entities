@@ -11,6 +11,7 @@ import { Tag } from "./entities/tag.entity";
 import { Category } from "./entities/category.entity";
 import { StoryHotScore } from "./entities/story-hot-score.entity";
 import { StoryDevelopment } from "./entities/story-development.entity";
+import { SourceBias } from "./entities";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -32,7 +33,8 @@ export const AppDataSource = new DataSource({
     Fact,
     Tag,
     Category,
-    StoryHotScore
+    StoryHotScore,
+    SourceBias,
   ],
   migrations: [__dirname + "/migrations/*.ts"],
   migrationsRun: false,

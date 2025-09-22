@@ -57,14 +57,14 @@ export const ARTICLE_TYPES_DESCRIPTIONS: Record<ArticleType, string> = {
 } as const;
 
 export const BIAS_LABELS_DESCRIPTIONS: Record<BiasLabel, string> = {
-  [BIAS_LABELS.FAR_LEFT]: 'Postura marxista, trotskista, anti-capitalista, revolucionaria. Partidos tipicos: FIT-U (Frente de Izquierda y de Trabajadores - Unidad), Partido Obrero, Partido Socialista y hasta algunos sectores del Kirchnerismo. Rechazo total del sistema capitalista, fuerte oposición a gobiernos liberales, defensa radical de los trabajadores, antiimperialismo, anti FMI, crítica al "régimen" político y económico actual.',
-  [BIAS_LABELS.LEFT]: 'Progresista, popular, de centroizquierda, muchas veces identificada con el kirchnerismo. Partidos/espacios típicos: Frente de Todos (actual Unión por la Patria), La Cámpora, sectores del peronismo progresista.',
-  [BIAS_LABELS.LEAN_LEFT]: 'Moderadamente progresista, a veces simpatizante del radicalismo o union civica, o sectores no peronistas pero afines a políticas sociales. Ejemplos: Periodismo o fuentes que critican la derecha pero no necesariamente apoyan el kirchnerismo.',
-  [BIAS_LABELS.CENTER]: 'Neutral o equidistante. Espacios: ciertos periodistas independientes o académicos que evitan definiciones partidarias.',
-  [BIAS_LABELS.LEAN_RIGHT]: 'Moderadamente liberal, crítica del kirchnerismo y a veces tambien a la libertad avanza(LLA). Espacios: A veces Algunos sectores de Juntos por el Cambio (e.g., UCR, PRO)',
-  [BIAS_LABELS.RIGHT]: 'Liberal o conservador claro, pro mercado, pro “orden”, anti-kirchnerismo. Apoya a La libertad avanzan y a Javier Milei pero no es fanatico.',
-  [BIAS_LABELS.FAR_RIGHT]: 'Ultraliberal, anti-Estado, a veces con discursos conspirativos. Fanaticos hasta la muerte de Javier Milei. Suelen ser YouTubers libertarios, influencers mileístas, algunos periodistas radicalizados.',
-  [BIAS_LABELS.NA]: 'No se puede determinar la postura política del medio o del periodista, o el articulo no es de caracter político.',
+  [BIAS_LABELS.FAR_LEFT]: 'Sesgo muy marcado. Postura marxista, trotskista, anti-capitalista, revolucionaria. Rechazo total del sistema capitalista, fuerte oposición a gobiernos liberales, defensa radical de los trabajadores, antiimperialismo.',
+  [BIAS_LABELS.LEFT]: 'Colectivista, socialista, progresista, popular. Cree en una fuerte intervencion del estado en la economia y la sociedad. Rechazo al liberalismo. No tan fanatico como extrema izquierda.',
+  [BIAS_LABELS.LEAN_LEFT]: 'Social democracia. Moderadamente progresista. Colectivista. Cree que la salida es el estado presente y que la solucion es eficientizarlo en lugar de achicarlo.',
+  [BIAS_LABELS.CENTER]: 'No se puede detectar un sesgo.',
+  [BIAS_LABELS.LEAN_RIGHT]: 'Moderadamente liberal. Cree en que hay que tener un estado mas chico pero tambien cree en que el estado tiene un rol importante.',
+  [BIAS_LABELS.RIGHT]: 'Individualista. Liberal o conservador claro, pro mercado, pro “orden”, pero no tan fanatico o ideologico como extrema derecha.',
+  [BIAS_LABELS.FAR_RIGHT]: 'Sesgo muy marcado. Ultraliberal, anti-Estado, el estado es el enemigo. Pro libertad economica y orden. El estado solo debe existir para la seguridad y la justicia.',
+  [BIAS_LABELS.NA]: 'El artículo no es de caracter político u económico.',
 } as const;
 
 export const ARTICLE_SCOPES_DESCRIPTIONS: Record<ArticleScope, string> = {

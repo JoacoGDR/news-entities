@@ -38,6 +38,9 @@ export class Article extends BaseEntity {
   @Column({ type: 'int', default: null})
   bias: number | null;
 
+  @Column({ type: 'text', nullable: true})
+  biasReason: string | null;
+
   @OneToOne(() => ScrapedArticle, (scrapedArticle) => scrapedArticle.article)
   @JoinColumn({ name: 'scraped_article_id' })
   scrapedArticle: ScrapedArticle;
