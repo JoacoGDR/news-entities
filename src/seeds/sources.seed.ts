@@ -17,6 +17,7 @@ const sampleSources = [
     ],
     domain: 'clarin.com',
     location: 'Argentina',
+    logoUrl: 'https://scraped-cover-images.s3.us-east-2.amazonaws.com/sources-logos/clarin.png',
   },
   {
     name: 'Pagina 12',
@@ -30,6 +31,7 @@ const sampleSources = [
     ],
     domain: 'pagina12.com.ar',
     location: 'Argentina',
+    logoUrl: 'https://scraped-cover-images.s3.us-east-2.amazonaws.com/sources-logos/pagina12.jpg',
   },
   {
     name: 'Perfil',
@@ -43,6 +45,7 @@ const sampleSources = [
     ],
     domain: 'perfil.com',
     location: 'Argentina',
+    logoUrl: 'https://scraped-cover-images.s3.us-east-2.amazonaws.com/sources-logos/perfil.png',
   },
   {
     name: 'La Nacion',
@@ -56,6 +59,7 @@ const sampleSources = [
     ],
     domain: 'lanacion.com.ar',
     location: 'Argentina',
+    logoUrl: 'https://scraped-cover-images.s3.us-east-2.amazonaws.com/sources-logos/lanacion.png',
   },
   {
     name: 'La Derecha Diario',
@@ -69,6 +73,7 @@ const sampleSources = [
     ],
     domain: 'derechadiario.com.ar',
     location: 'Argentina',
+    logoUrl: 'https://scraped-cover-images.s3.us-east-2.amazonaws.com/sources-logos/laderechadiario.jpeg',
   },
   {
     name: 'Infobae',
@@ -82,11 +87,13 @@ const sampleSources = [
     ],
     domain: 'infobae.com',
     location: 'Argentina',
+    logoUrl: 'https://scraped-cover-images.s3.us-east-2.amazonaws.com/sources-logos/infobae.jpg',
   },
   {
     name: 'Ámbito',
     location: 'Argentina',
     domain: 'ambito.com',
+    logoUrl: 'https://scraped-cover-images.s3.us-east-2.amazonaws.com/sources-logos/ambito.jpeg',
     rssFeeds: [
       {
         url: 'https://www.ambito.com/rss/pages/politica.xml/',
