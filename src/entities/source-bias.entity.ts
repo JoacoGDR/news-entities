@@ -6,7 +6,13 @@ import { ViewEntity, ViewColumn, PrimaryColumn } from 'typeorm';
     SELECT
       s.id as source_id,
       s.name as source_name,
-      AVG(a.bias) as average_bias
+      SUM(a.bias * CASE
+        WHEN a.bias = 0 THEN 0.25
+        ELSE 1.0
+      END) / SUM(CASE
+        WHEN a.bias = 0 THEN 0.25
+        ELSE 1.0
+      END) as average_bias
     FROM sources s
     LEFT JOIN rss_feeds rf ON s.id = rf.source_id
     LEFT JOIN rss_entries re ON rf.id = re.rss_feed_id
