@@ -31,7 +31,6 @@ export class Article extends BaseEntity {
   @Column({
     type: 'text',
     nullable: true,
-    comment: 'Embedding vector for similarity search (1536 dimensions for OpenAI text-embedding-3-small)'
   })
   embedding: string | null;
 

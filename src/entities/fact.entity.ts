@@ -20,4 +20,7 @@ export class Fact extends BaseEntity {
 
   @ManyToMany(() => Story, (story) => story.facts)
   stories: Story[];
+
+  @Column({ type: 'text', nullable: true })
+  embedding: string | null;
 }

@@ -14,6 +14,9 @@ const sampleSources = [
       {
         url: 'https://www.clarin.com/rss/economia/',
       },
+      {
+        url: 'https://www.clarin.com/rss/mundo/'
+      }
     ],
     domain: 'clarin.com',
     location: 'Argentina',
@@ -28,6 +31,9 @@ const sampleSources = [
       {
         url: 'https://www.pagina12.com.ar/rss/secciones/el-pais/notas',
       },
+      {
+        url: 'https://www.pagina12.com.ar/rss/secciones/el-mundo/notas',
+      }
     ],
     domain: 'pagina12.com.ar',
     location: 'Argentina',
@@ -213,6 +219,7 @@ export async function seedSources(): Promise<void> {
       });
       source.domain = sourceData.domain;
       source.location = sourceData.location;
+      source.logoUrl = sourceData.logoUrl;
       source.lastFetchedAt = new Date();
       return source;
     });

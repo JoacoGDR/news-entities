@@ -68,8 +68,8 @@ export const BIAS_LABELS_DESCRIPTIONS: Record<BiasLabel, string> = {
 } as const;
 
 export const ARTICLE_SCOPES_DESCRIPTIONS: Record<ArticleScope, string> = {
-  [ARTICLE_SCOPES.DOMESTIC]: 'Un artículo que cubre eventos o situaciones desde el país de origen.',
-  [ARTICLE_SCOPES.INTERNATIONAL]: 'Un artículo que cubre eventos o situaciones desde otros países, o noticias mundiales.',
+  [ARTICLE_SCOPES.DOMESTIC]: 'Un articulo que cubre eventos acerca del pais de origen. Esto no implica que otros paises sean mencionados.',
+  [ARTICLE_SCOPES.INTERNATIONAL]: 'Un articulo que cubre eventos acerca de otros paises, o noticias mundiales.',
 } as const;
 
 export const BIAS_NUMERIC_MAP: Record<BiasLabel, number | null> = {

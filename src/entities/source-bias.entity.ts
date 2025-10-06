@@ -7,10 +7,10 @@ import { ViewEntity, ViewColumn, PrimaryColumn } from 'typeorm';
       s.id as source_id,
       s.name as source_name,
       SUM(a.bias * CASE
-        WHEN a.bias = 0 THEN 0.25
+        WHEN a.bias = 0 THEN 0.10
         ELSE 1.0
       END) / SUM(CASE
-        WHEN a.bias = 0 THEN 0.25
+        WHEN a.bias = 0 THEN 0.10
         ELSE 1.0
       END) as average_bias
     FROM sources s
