@@ -8,5 +8,6 @@ export { Fact } from './fact.entity';
 export { Tag } from './tag.entity';
 export { Category } from './category.entity';
 export { StoryHotScore } from './story-hot-score.entity';
+export { TagHotScore } from './tag-hot-score.entity';
 export { StoryDevelopment } from './story-development.entity';
 export { SourceBias } from './source-bias.entity';
