@@ -50,7 +50,7 @@ export const ARTICLE_TYPES_DESCRIPTIONS: Record<ArticleType, string> = {
   [ARTICLE_TYPES.DISCARDED]: `Un artículo que debe ser descartado si cumple con alguna de las siguientes condiciones:
         1. Problemas técnicos – El artículo no se extrajo correctamente (por ejemplo, por paywalls, contenido faltante o errores de formato).
         2. Contenido editorial no informativo – Incluye horóscopos, astrología, loterías, artículos de autoayuda u otros contenidos de entretenimiento/editoriales sin base en hechos actuales.
-        3. Contenido informativo rutinario – Como pronósticos del clima diario, resultados de lotería u otras actualizaciones de servicio público programadas regularmente.
+        3. Contenido informativo rutinario – Como pronósticos del clima diario, resultados de lotería, cotizaciones del dólar meramente informativo u otras actualizaciones de servicio público programadas regularmente.
         4. Contenido no actual o histórico – Incluye biografías, anécdotas históricas o retrospectivas que no están directamente relacionadas con un evento actual o situación en curso.
         5. Opinión o análisis sin conexión clara con la actualidad – Ensayos, columnas de opinión o artículos analíticos que no están fundamentados en un evento o desarrollo noticioso reciente.
         6. Falta de relevancia o significancia – Artículos que técnicamente informan sobre un tema actual pero que son triviales, muy nicho o poco relevantes para el público general.`

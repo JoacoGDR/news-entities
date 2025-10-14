@@ -4,8 +4,8 @@ import {
   ManyToMany,
   Index,
 } from 'typeorm';
-import { Story } from './story.entity';
 import { BaseEntity } from './base.entity';
+import { Article } from './article.entity';
 
 @Entity('tags')
 export class Tag extends BaseEntity {
@@ -17,6 +17,6 @@ export class Tag extends BaseEntity {
   @Index({ unique: true })
   normalizedName: string;
 
-  @ManyToMany(() => Story, (story) => story.tags)
-  stories: Story[];
+  @ManyToMany(() => Article, (article) => article.tags)
+  articles: Article[];
 }

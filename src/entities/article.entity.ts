@@ -12,6 +12,7 @@ import { Story } from './story.entity';
 import { Fact } from './fact.entity';
 import { BaseEntity } from './base.entity';
 import { Category } from './category.entity';
+import { Tag } from './tag.entity';
 
 @Entity('articles')
 export class Article extends BaseEntity {
@@ -57,4 +58,12 @@ export class Article extends BaseEntity {
     inverseJoinColumn: { name: 'category_id', referencedColumnName: 'id' },
   })
   categories: Category[];
+
+  @ManyToMany(() => Tag, (tag) => tag.articles)
+  @JoinTable({
+    name: 'article_tags',
+    joinColumn: { name: 'article_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'tag_id', referencedColumnName: 'id' },
+  })
+  tags: Tag[];
 }
