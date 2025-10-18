@@ -2,7 +2,6 @@ import "reflect-metadata";
 
 // Export all entities
 export * from './entities';
-export * from './constants/article-constants';
 
 // Export database configuration
 export { AppDataSource, createDataSource } from './data-source';

@@ -48,6 +48,9 @@ const sampleSources = [
       {
         url: 'https://www.perfil.com/feed/politica',
       },
+      {
+        url: 'https://www.perfil.com/feed/internacionales',
+      },
     ],
     domain: 'perfil.com',
     location: 'Argentina',
@@ -61,6 +64,9 @@ const sampleSources = [
       },
       {
         url: 'https://www.lanacion.com.ar/arc/outboundfeeds/rss/category/economia/?outputType=xml',
+      },
+      {
+        url: 'https://www.lanacion.com.ar/arc/outboundfeeds/rss/category/el-mundo/?outputType=xml',
       },
     ],
     domain: 'lanacion.com.ar',
@@ -76,6 +82,9 @@ const sampleSources = [
       {
         url: 'https://derechadiario.com.ar/rss/cat/politica',
       },
+      {
+        url: 'https://derechadiario.com.ar/rss/cat/internacionales',
+      }
     ],
     domain: 'derechadiario.com.ar',
     location: 'Argentina',
@@ -107,6 +116,9 @@ const sampleSources = [
       {
         url: 'https://www.ambito.com/rss/pages/economia.xml',
       },
+      {
+        url: 'https://www.ambito.com/rss/pages/mundo.xml',
+      }
     ],
   }
 ];

@@ -31,14 +31,14 @@ async function resetDatabaseManual() {
     await AppDataSource.initialize();
 
     console.log('🗑️  Dropping all tables manually...');
-    
+
     const result = await AppDataSource.query(`
       SELECT tablename 
       FROM pg_tables 
-      WHERE schemaname = 'public' 
+      WHERE schemaname = 'public'
       AND tablename NOT LIKE 'pg_%'
     `);
-    
+
     const existingTables = result.map((row: any) => row.tablename);
     console.log(`   Found ${existingTables.length} existing tables`);
 
@@ -60,12 +60,12 @@ async function resetDatabaseManual() {
 
     // Verify all tables are gone
     const remainingTables = await AppDataSource.query(`
-      SELECT tablename 
-      FROM pg_tables 
-      WHERE schemaname = 'public' 
+      SELECT tablename
+      FROM pg_tables
+      WHERE schemaname = 'public'
       AND tablename NOT LIKE 'pg_%'
     `);
-    
+
     if (remainingTables.length === 0) {
       console.log('   ✅ All tables successfully dropped');
     } else {
@@ -92,4 +92,4 @@ if (useAutoApproach) {
   resetDatabase();
 } else {
   resetDatabaseManual();
-} 
+}
