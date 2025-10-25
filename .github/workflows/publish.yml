@@ -70,7 +70,7 @@ jobs:
                 echo '//npm.pkg.github.com/:_authToken='\$NODE_AUTH_TOKEN >> .npmrc && \
                 npm install -g typeorm @JoacoGDR/news-entities@latest pg && \
                 cd /usr/local/lib/node_modules/@JoacoGDR/news-entities && \
-                npm run migration:run
+                npx typeorm migration:run -d dist/data-source.js
               "
             
             echo "Migrations completed successfully!"
