@@ -1,6 +1,6 @@
 {
-  "name": "@joacogdelr/news-entities",
-  "version": "1.4.9",
+  "name": "@JoacoGDR/news-entities",
+  "version": "1.5.0",
   "description": "Shared entities and migrations for news applications",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -26,5 +26,12 @@
   },
   "peerDependencies": {
     "pg": "^8.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoacoGDR/news-entities.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
