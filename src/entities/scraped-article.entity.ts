@@ -22,9 +22,6 @@ export class ScrapedArticle extends BaseEntity {
   @Column({ type: 'text', name: 'scraped_content' })
   scrapedContent: string;
 
-  @Column({ type: 'timestamp', name: 'scraped_at' })
-  scrapedAt: Date;
-
   @OneToOne(() => RssEntry, (rssEntry) => rssEntry.scrapedArticle)
   @JoinColumn({ name: 'rss_entry_id' })
   rssEntry: RssEntry;

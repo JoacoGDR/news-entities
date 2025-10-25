@@ -25,12 +25,6 @@ export class RssEntry extends BaseEntity {
   @Column({ type: 'timestamp', name: 'published_at' })
   publishedAt: Date;
 
-  @Column({ type: 'timestamp', name: 'fetched_at' })
-  fetchedAt: Date;
-
-  @Column({ type: 'boolean', name: 'is_enqueued', default: false })
-  isEnqueued: boolean;
-
   @ManyToOne(() => RssFeed, (rssFeed) => rssFeed.rssEntries)
   @JoinColumn({ name: 'rss_feed_id' })
   rssFeed: RssFeed;

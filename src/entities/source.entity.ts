@@ -23,9 +23,6 @@ export class Source extends BaseEntity {
   @Column({ type: 'varchar' })
   location: string;
 
-  @Column({ type: 'timestamp', nullable: true, name: 'last_fetched_at' })
-  lastFetchedAt: Date;
-
   @OneToMany(() => RssFeed, (rssFeed) => rssFeed.source, { cascade: true })
   rssFeeds: RssFeed[];
 

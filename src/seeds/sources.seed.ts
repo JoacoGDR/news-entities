@@ -232,7 +232,6 @@ export async function seedSources(): Promise<void> {
       source.domain = sourceData.domain;
       source.location = sourceData.location;
       source.logoUrl = sourceData.logoUrl;
-      source.lastFetchedAt = new Date();
       return source;
     });
 

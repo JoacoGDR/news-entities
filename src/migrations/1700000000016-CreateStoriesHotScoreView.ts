@@ -1,11 +1,9 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class UpdateStoriesHotScoreView1759286134659 implements MigrationInterface {
-    name = 'UpdateStoriesHotScoreView1759286134659'
+export class CreateStoriesHotScoreView1700000000016 implements MigrationInterface {
+    name = 'CreateStoriesHotScoreView1700000000016'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DELETE FROM "typeorm_metadata" WHERE "type" = $1 AND "name" = $2 AND "schema" = $3`, ["MATERIALIZED_VIEW","stories_hot_score","public"]);
-        await queryRunner.query(`DROP MATERIALIZED VIEW "stories_hot_score"`);
         await queryRunner.query(`CREATE MATERIALIZED VIEW "stories_hot_score" AS 
     WITH recent_activity AS (
       SELECT
@@ -60,6 +58,8 @@ export class UpdateStoriesHotScoreView1759286134659 implements MigrationInterfac
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`DELETE FROM "typeorm_metadata" WHERE "type" = $1 AND "name" = $2 AND "schema" = $3`, ["MATERIALIZED_VIEW","stories_hot_score","public"]);
+        await queryRunner.query(`DROP MATERIALIZED VIEW "stories_hot_score"`);
     }
-
 }
+
