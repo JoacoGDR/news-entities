@@ -78,17 +78,17 @@ jobs:
 
           rm -f private_key.pem
 
-      - name: Trigger news-api rebuild
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
-          repository: ${{ github.repository_owner }}/news-api
-          event-type: news-entities-updated
+      # - name: Trigger news-api rebuild
+      #   uses: peter-evans/repository-dispatch@v3
+      #   with:
+      #     token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+      #     repository: ${{ github.repository_owner }}/news-api
+      #     event-type: news-entities-updated
 
-      - name: Trigger news-scraper rebuild
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
-          repository: ${{ github.repository_owner }}/news-scraper
-          event-type: news-entities-updated
+      # - name: Trigger news-scraper rebuild
+      #   uses: peter-evans/repository-dispatch@v3
+      #   with:
+      #     token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+      #     repository: ${{ github.repository_owner }}/news-scraper
+      #     event-type: news-entities-updated
 
