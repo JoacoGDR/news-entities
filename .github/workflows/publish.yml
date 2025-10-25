@@ -38,57 +38,17 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run database migrations on production
-        env:
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          echo "$SSH_PRIVATE_KEY" > private_key.pem
-          chmod 600 private_key.pem
-          
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@$EC2_HOST << 'ENDSSH'
-            set -e
-            cd /opt/news-app
-            
-            echo "Running database migrations..."
-            
-            # Run migrations using the database container directly
-            docker compose exec -T database psql -U user -d news_scraper -c "SELECT 'Database ready';"
-            
-            # Create a temporary container to run migrations
-            DATABASE_URL=$(grep DATABASE_URL .env | cut -d'=' -f2)
-            GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
-            
-            # Run migrations in a temporary container
-            docker run --rm \
-              --network news-app_news-network \
-              -e DATABASE_URL="$DATABASE_URL" \
-              -e NODE_AUTH_TOKEN="$GITHUB_TOKEN" \
-              node:20-alpine \
-              sh -c "
-                echo '@JoacoGDR:registry=https://npm.pkg.github.com' > .npmrc && \
-                echo '//npm.pkg.github.com/:_authToken='\$NODE_AUTH_TOKEN >> .npmrc && \
-                npm install -g typeorm @JoacoGDR/news-entities@latest pg && \
-                cd /usr/local/lib/node_modules/@JoacoGDR/news-entities && \
-                npx typeorm migration:run -d dist/data-source.js
-              "
-            
-            echo "Migrations completed successfully!"
-          ENDSSH
+      - name: Trigger news-api rebuild
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+          repository: ${{ github.repository_owner }}/news-api
+          event-type: news-entities-updated
 
-          rm -f private_key.pem
-
-      # - name: Trigger news-api rebuild
-      #   uses: peter-evans/repository-dispatch@v3
-      #   with:
-      #     token: ${{ secrets.REPO_DISPATCH_TOKEN }}
-      #     repository: ${{ github.repository_owner }}/news-api
-      #     event-type: news-entities-updated
-
-      # - name: Trigger news-scraper rebuild
-      #   uses: peter-evans/repository-dispatch@v3
-      #   with:
-      #     token: ${{ secrets.REPO_DISPATCH_TOKEN }}
-      #     repository: ${{ github.repository_owner }}/news-scraper
-      #     event-type: news-entities-updated
+      - name: Trigger news-scraper rebuild
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+          repository: ${{ github.repository_owner }}/news-scraper
+          event-type: news-entities-updated
 
