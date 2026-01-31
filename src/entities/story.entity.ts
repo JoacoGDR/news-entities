@@ -21,6 +21,9 @@ export class Story extends BaseEntity {
   @Column({ type: 'text', nullable: true, name: 'cover_image_url' })
   coverImageUrl: string | null;
 
+  @Column({ type: 'int', default: 0, name: 'article_count' })
+  articleCount: number;
+
   @ManyToMany(() => Article, (article) => article.stories)
   @JoinTable({
     name: 'story_articles',
