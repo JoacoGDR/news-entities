@@ -9,6 +9,8 @@ import { Fact } from './fact.entity';
 import { Article } from './article.entity';
 import { BaseEntity } from './base.entity';
 import { StoryDevelopment } from './story-development.entity';
+import { StoryBiasStance } from './story-bias-stance.entity';
+
 @Entity('stories')
 export class Story extends BaseEntity {
 
@@ -42,4 +44,7 @@ export class Story extends BaseEntity {
 
   @OneToMany(() => StoryDevelopment, (storyDevelopment) => storyDevelopment.story)
   storyDevelopments: StoryDevelopment[];
+
+  @OneToMany(() => StoryBiasStance, (biasStance) => biasStance.story)
+  biasStances: StoryBiasStance[];
 }

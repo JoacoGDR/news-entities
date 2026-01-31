@@ -23,6 +23,9 @@ export class Article extends BaseEntity {
   @Column({ type: 'text' })
   summary: string;
 
+  @Column({ type: 'text', nullable: true })
+  stance: string | null;
+
   @Column({ type: 'varchar' })
   scope: string;
 
