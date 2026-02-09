@@ -8,6 +8,9 @@ export class RssFeed extends BaseEntity {
   @Column({ type: 'varchar' })
   url: string;
 
+  @Column({ type: 'boolean', default: true })
+  enabled: boolean;
+
   @ManyToOne(() => Source, (source) => source.rssFeeds)
   @JoinColumn({ name: 'source_id' })
   source: Source;
